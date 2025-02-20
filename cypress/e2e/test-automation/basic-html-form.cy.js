@@ -1,0 +1,26 @@
+describe('Basic HTML Form Example', () => {
+    const inputText = 'TESTE'
+    it('Submit form', () => {
+        cy.visit('https://testpages.eviltester.com/styled/basic-html-form-test.html')
+
+        cy.get(':nth-child(1) > td > input').type(inputText)
+        cy.get(':nth-child(2) > td > input').type(inputText)
+        cy.get('textarea').clear().type(inputText)
+        cy.get('[type="file"]').selectFile('cypress/fixtures/download.jpg')
+        cy.get('[value="cb1"]').check()
+        cy.get('[value="cb3"]').uncheck()
+        cy.get('[value="cb2"]').check()
+        cy.get('[value="rd1"]').check()
+        cy.get('[value="rd2"]').check()
+        cy.get('[value="rd3"]').check()
+        cy.get('[multiple="multiple"]').select(['ms1', 'ms3'])
+        cy.get('[name="dropdown"]').select('Drop Down Item 2')
+        cy.get('[type="submit"]').click()
+        cy.get('#back_to_form')
+        .should('exist')
+        .should('be.visible')
+        .should('have.text', 'Go back to the form')
+        .should('contain', 'Go back to the form')
+        cy.get('#back_to_form').click()
+    })
+})
